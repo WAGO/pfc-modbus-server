@@ -1,4 +1,4 @@
-FROM sergo777/pfc-fw-base
+FROM wagoautomation/pfc-fw-base
 LABEL maintainer="sergei.ikkert@wago.com"
 LABEL version="3.0.0.35"
 LABEL svn.revision="37597"
