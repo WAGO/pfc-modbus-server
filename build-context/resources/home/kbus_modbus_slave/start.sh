@@ -19,7 +19,6 @@ run() {
 }
 
 trap cleanup INT TERM
-disableKbus
 run
 
 
