@@ -1,8 +1,11 @@
-# How to run kbus-modbus-slave container
+[![DockerHub stars](https://img.shields.io/docker/stars/wagoautomation/pfc-modbusslave.svg?flat&logo=docker "DockerHub stars")](https://hub.docker.com/r/wagoautomation/pfc-modbusslave)
+[![DockerHub pulls](https://img.shields.io/docker/pulls/wagoautomation/pfc-modbusslave.svg?flat&logo=docker "DockerHub pulls")](https://hub.docker.com/r/wagoautomation/pfc-modbusslave)
+
+# How to run pfc-modbus-slave container
 
 ## Prerequisites for tutorial
 - Preinstalled SSH Client (e.g. https://www.putty.org/)
-- Wago PFC with Docker
+- Wago PFC with Docker (see https://github.com/WAGO/docker-ipk)
 
 ## PFC Login
 Start SSH Client e.g. Putty 
@@ -19,32 +22,38 @@ docker ps # to see all running container (no container should run)
 docker images # to see all preinstalled images
  ```
 
-## Docker Login
-To gain access to the private Docker repository, you must be registered as a collaborator.  (please contact the repository maintainer) 
-
- ```bash
-docker login 
+ ## Get prebuild pfc-modbus-slave image
+```bash
+docker pull wagoautomation/pfc-modbusslave 
  ```
-( For help see: https://docs.docker.com/engine/reference/commandline/login/)
 
- ## Get prebuild kbus-modbus-slave image
- > !!! The link does not work yet, because we cannot create private repositories anymore !!!
-  ```bash
-docker pull wagoautomation/kbus-modbus-slave 
- ```
-## Setup PFC environment for execution of kbus-modbus-slave container. 
-Before the kbus-modbus-slave container can be started it is necessary to create a special environment on the PFC. During this process some changes are made in the host system!!!
+## Setup PFC environment for execution of pfc-modbus-slave container. 
+Before the pfc-modbus-slave container can be started it is necessary to create a special environment on the PFC. There are two ways to achieve it: 
+- automatically with the help of a script 
+- manually
+
+### Automatically
 1. copy script setup_environment.sh to PFC.
 2. chmod x setup_environment.sh
 3. execute: ./setup_environment.sh
 
-## Restore original PFC environment.
+#### Restore original PFC environment.
 To undo the environment created in the previous step, perform the following steps:
 1. copy script undo_environment.sh to PFC.
 2. chmod x undo_environment.sh
 3. execute: ./undo_environment.sh
 
-## Start kbus-modbus-slave container
+### Manually 
+1. Start Wago PFC.
+2. Open WBM (Web Base Management) menu "General PLC Runtime Configuration"
+3. Set PLC runtime version to "None"
+4. Start container, with credentials: We need the root password to start kbus on the host and the IP address of the PLC controller.
+5. Set PFC onboard switch in 'running' state.
+
+<b>LED Signal U1 shows: RED=kbus init on host engaded, YELLOW=prepare kbus for container, GREEN=kbus is working from container.</b>
+
+
+## Start pfc-modbus-slave container
 
   ```bash
   docker run -d \
@@ -52,13 +61,29 @@ To undo the environment created in the previous step, perform the following step
   --restart unless-stopped \
   --privileged \
   -p 502:502 \
-  --name=kbus-modbus-slave \
+  --name=pfc-modbus-slave \
   -v /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket \
-  wagoautomation/kbus-modbus-slave 
+  wagoautomation/pfc-modbusslave 
  ```
 
- ## How to test kbus-modbus-slave container. 
-Any Modbus client can be used for testing. In our case we use Wago-Node-Red containers with Modbus nodes. 
+## Access PFC as a simple modbus slave device.
+
+EA mapping is like 750-362, watch Coupler documentation to learn how to get access to mapped digital and analog slots.  
+ 
+https://www.wago.com/de/io-systeme/feldbuskoppler-modbus-tcp/p/750-362
+
+<img src="https://www.wago.com/media/images/hf1/hfe/10220570279966.jpg" alt="750-362" height="175" align="middle">
+
+Onboard operating switch: START = modbusslave is running : STOP modbusslave is stopped.   
+
+> If the kbus would not init: => stop container => activate runtime => deactivate runtime => start container          
+(This inits the kbus via runtime thread, watch kbus led: must be green)
+
+## How to test pfc-modbus-slave container.
+Any Modbus client can be used for testing see (e.g https://www.modbustools.com/download.html)
+
+ 
+Or use Wago-Node-Red containers with Modbus nodes. 
 At least one digital IO module should be connected to the PFC. 
 1. Start Node-Red Container see https://hub.docker.com/r/wagoautomation/node-red-iot
 2. Copy and deploy Node-Red Flow.
