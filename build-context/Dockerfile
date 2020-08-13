@@ -1,4 +1,4 @@
-FROM wagoautomation/pfc-firmware-base-image as image
+FROM wagoautomation/pfc-firmware-base-image:v15 as image
 COPY resources / 
 
 RUN opkg install /home/kbus_modbus_slave/kbusmodbusslave_armhf.ipk
