@@ -1,5 +1,5 @@
-[![DockerHub stars](https://img.shields.io/docker/stars/wagoautomation/pfc-modbusslave.svg?flat&logo=docker "DockerHub stars")](https://hub.docker.com/r/wagoautomation/pfc-modbusslave)
-[![DockerHub pulls](https://img.shields.io/docker/pulls/wagoautomation/pfc-modbusslave.svg?flat&logo=docker "DockerHub pulls")](https://hub.docker.com/r/wagoautomation/pfc-modbusslave)
+[![DockerHub stars](https://img.shields.io/docker/stars/wagoautomation/pfc-modbus-slave.svg?flat&logo=docker "DockerHub stars")](https://hub.docker.com/r/wagoautomation/pfc-modbus-slave)
+[![DockerHub pulls](https://img.shields.io/docker/pulls/wagoautomation/pfc-modbus-slave.svg?flat&logo=docker "DockerHub pulls")](https://hub.docker.com/r/wagoautomation/pfc-modbus-slave)
 
 # How to run pfc-modbus-slave container
 
@@ -24,7 +24,7 @@ docker images # to see all preinstalled images
 
  ## Get prebuild pfc-modbus-slave image
 ```bash
-docker pull wagoautomation/pfc-modbusslave 
+docker pull wagoautomation/pfc-modbus-slave 
  ```
 
 ## Setup PFC environment for execution of pfc-modbus-slave container. 
@@ -63,7 +63,7 @@ To undo the environment created in the previous step, perform the following step
   -p 502:502 \
   --name=pfc-modbus-slave \
   -v /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket \
-  wagoautomation/pfc-modbusslave 
+  wagoautomation/pfc-modbus-slave 
  ```
 
 ## Access PFC as a simple modbus slave device.
