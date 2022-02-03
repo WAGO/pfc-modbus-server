@@ -1,4 +1,4 @@
-FROM wagoautomation/pfc-firmware-base-image:v15 as image
+FROM wagoautomation/pfc-firmware-base:FW19-03.07.14-v0.1.0 as image
 COPY resources / 
 
 RUN opkg install /home/kbus_modbus_server/kbusmodbusserver_armhf.ipk
@@ -13,8 +13,7 @@ RUN rm -rf /usr/bin/qemu-arm-static
 
 FROM scratch
 LABEL maintainer="sergei.ikkert@wago.com"
-LABEL version="3.0.0.35"
-LABEL svn.revision="37597"
+LABEL version="v1.5.0"
 LABEL description="WAGO Kontakttechnik pfc modbus server image"
 COPY --from=image / /
 
