@@ -13,8 +13,10 @@ RUN rm -rf /usr/bin/qemu-arm-static
 
 FROM scratch
 LABEL maintainer="sergei.ikkert@wago.com"
-LABEL version="v1.5.0"
-LABEL description="WAGO Kontakttechnik pfc modbus server image"
 COPY --from=image / /
+LABEL authors="Dirk.Meihoefer@wago.com, Sergei.Ikkert@wago.com"
+LABEL org.label-schema.version=${IMAGE_TAG}
+LABEL org.label-schema.vendor="WAGO"
+LABEL org.label-schema.name="wagoautomation/pfc-modbus-server"
 
 ENTRYPOINT ["/home/kbus_modbus_server/start.sh"]
