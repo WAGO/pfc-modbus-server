@@ -1,6 +1,6 @@
 FROM wagoautomation/pfc-firmware-base:FW19-03.07.14-v0.1.0 as image
-COPY resources / 
 
+COPY resources / 
 RUN opkg install /home/kbus_modbus_server/kbusmodbusserver_armhf.ipk
 RUN opkg clean
 RUN chmod +x /home/kbus_modbus_server/start.sh   
