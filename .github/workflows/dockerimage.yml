@@ -3,11 +3,8 @@ name: Docker Image CI
 on:
   workflow_dispatch:
   push:
-    branches:
-      - master
-    paths:
-      - build-context/*
-      - .github/workflows/dockerimage.yml
+    tags:
+      - 'v*'
 
 jobs:
   build:
