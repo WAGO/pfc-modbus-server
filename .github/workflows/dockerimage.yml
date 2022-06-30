@@ -34,7 +34,7 @@ jobs:
           file: ./build-context/Dockerfile
           platforms: linux/arm/v7
           build-args: |
-            IMAGE_TAG=${{ steps.get-latest-tag.outputs.tag  }}
+            TAG=${{ steps.get-latest-tag.outputs.tag  }}
           push: true
           tags: |
             wagoautomation/pfc-modbus-server:${{ steps.get-latest-tag.outputs.tag }}

@@ -1,4 +1,4 @@
-FROM wagoautomation/pfc-firmware-base:FW21-03.09.07-alpha.1 as image
+FROM wagoautomation/pfc-firmware-base:FW21-03.09.07 as image
 
 COPY resources / 
 RUN opkg install /home/kbus_modbus_server/kbusmodbusserver_armhf.ipk
